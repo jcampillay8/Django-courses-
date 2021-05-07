@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+        <link rel="stylesheet" href="{% static 'style_comments.css' %}" >
+</head>
+<body>
+    <div class="contenedor">
+        <div class="information_courses">
+            <h2>Course Information</h2>
+            <p>Course Name: {{ course.course.name}}</p>
+            <p>Course Description: {{ course.description}}</p>
+        </div>
+        <div class="row2">
+            <a href="{% url 'courses' %}" class="button-1">Home</a>
+        </div>
+        <div class="add_comments">
+            <form id="my-form" method='post'>
+                {% csrf_token %}
+                <div class="form-item">
+                    <label class="label-item">Comment:</label>
+                    <textarea class="input-item" rows="5" cols="52" name="comment"></textarea>
+                </div>
+                <div>
+                        <input type="hidden" name="course_id" value="{{course.course_id}}">
+                    <input class="button-submit" type='submit' value='Add Comment' class="button">
+                </div>
+            </form>
+            <h3>Comments</h3>
+            {% for comment in comments %}
+                <p>{{comment.created_at}} - {{comment.comment}}</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
